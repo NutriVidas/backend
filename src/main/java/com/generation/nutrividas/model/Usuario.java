@@ -42,6 +42,8 @@ public class Usuario {
 	
 	@Size(max = 5000, message = "O link da foto não pode ser maior do que 5000 caracteres!")
 	private String foto;
+
+	private String tipo;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties("usuario")
@@ -93,6 +95,14 @@ public class Usuario {
 
 	public void setProdutos(List<Produto> produtos) {
 		this.produtos = produtos;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 	
 }
