@@ -49,7 +49,7 @@ public class ProdutoController {
 		return ResponseEntity.ok(produtoRepository.findAllByPrecoLessThanEqualOrderByPreco(preco));
 	}
 	
-	@GetMapping("/preco-entre/{preco}/{precoB}")
+	@GetMapping("/preco-entre/{preco}/{precoFinal}")
 	public ResponseEntity<List<Produto>> getByPrecoB (
 			@PathVariable @DecimalMin("0.0") BigDecimal precoInicial, 
 			@PathVariable @DecimalMin("0.0") BigDecimal precoFinal) {
