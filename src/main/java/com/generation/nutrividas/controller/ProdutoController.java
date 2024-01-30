@@ -1,5 +1,6 @@
 package com.generation.nutrividas.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +14,7 @@ import com.generation.nutrividas.repository.CategoriaRepository;
 import com.generation.nutrividas.repository.ProdutoRepository;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.DecimalMin;
 
 @RestController
 @RequestMapping("/produtos")
@@ -25,7 +27,7 @@ public class ProdutoController {
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 	
-	@GetMapping
+	@GetMapping("/all")
 	public ResponseEntity<List<Produto>> getAll () {
 		return ResponseEntity.ok(produtoRepository.findAll());
 	}
@@ -40,6 +42,18 @@ public class ProdutoController {
 	@GetMapping("/nome/{nome}")
 	public ResponseEntity<List<Produto>> getByNome (@PathVariable String nome) {
 		return ResponseEntity.ok(produtoRepository.findAllByNomeContainingIgnoreCase(nome));
+	}
+	
+	@GetMapping("/preco/{preco}")
+	public ResponseEntity<List<Produto>> getByPreco (@PathVariable BigDecimal preco) {
+		return ResponseEntity.ok(produtoRepository.findAllByPrecoLessThanEqualOrderByPreco(preco));
+	}
+	
+	@GetMapping("/preco-entre/{preco}/{precoB}")
+	public ResponseEntity<List<Produto>> getByPrecoB (
+			@PathVariable @DecimalMin("0.0") BigDecimal precoInicial, 
+			@PathVariable @DecimalMin("0.0") BigDecimal precoFinal) {
+		return ResponseEntity.ok(produtoRepository.findAllByPrecoBetweenOrderByPreco(precoInicial, precoFinal));
 	}
 	
 	@PostMapping

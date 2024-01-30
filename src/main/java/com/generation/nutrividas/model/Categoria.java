@@ -31,6 +31,9 @@ public class Categoria {
 	@Size(min = 10, max = 1000)
 	private String descricao;
 	
+	@Size(max = 5000, message = "O link da foto não pode ser maior do que 5000 caracteres!")
+	private String foto;
+	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "categoria", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties("categoria")
 	private List<Produto> produtos;
@@ -59,6 +62,14 @@ public class Categoria {
 		this.descricao = descricao;
 	}
 	
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
+
 	public List<Produto> getProdutos() {
 		return produtos;
 	}
